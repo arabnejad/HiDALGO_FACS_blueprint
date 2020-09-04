@@ -1,0 +1,65 @@
+########
+# Copyright (c) 2019 Atos Spain SA. All rights reserved.
+# Modified by Hamid Arabnejad, UK
+# 
+# This file is part of Croupier. It is written for FACS application
+#
+# Croupier is free software: you can redistribute it and/or modify it
+# under the terms of the Apache License, Version 2.0 (the License) License.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT ANY WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT, IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+# OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# See README file for full disclaimer information and LICENSE file for full
+# license information in the project root.
+#
+# @author: Hamid Arabnejad
+#
+# user-blueprint-inputs.yaml
+
+#-----------------------------------------------------
+#                 HPC Infrastructure
+#-----------------------------------------------------
+hpc_base_dir: $HOME
+hpc_interface_config:
+  country_tz: Europe/Madrid
+  infrastructure_interface: SLURM
+
+#-----------------------------------------------------
+#                 EAGLE ACCOUNT
+#-----------------------------------------------------
+hpc_interface_credentials:
+  host: eagle.man.poznan.pl
+  user: <user name>
+  password: <password>
+
+partition_name: interactive
+jobmanager_list: "SLURM"
+
+#-----------------------------------------------------
+#                     CKAN inputs
+#-----------------------------------------------------
+ckanrepo: "https://hidalgo1.man.poznan.pl"
+ckanapikey: "<private key>"
+
+#-----------------------------------------------------
+#         FACS SIMULATION INPUT PARAMETERS
+#-----------------------------------------------------
+facs_github_repo: "https://github.com/djgroen/facs.git"
+branch: "master"
+location_name: "brent"
+ci_multiplier: "0.475"
+transition_scenario: "Extend-lockdown"
+transition_mode: "0"
+quick_test_flag: "TRUE"
+output_dir: "."
+ensemble_number: "1"
+jobmanager_type: "SLURM"
+nnodes: "1"
+ncorespernode: "28"
+inputconfigtags: "FACS,locations,inputs"
