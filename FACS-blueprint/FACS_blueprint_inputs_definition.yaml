@@ -16,6 +16,7 @@ inputs:
       default: {}
     partition_name:
       default: interactive
+      
     jobwalltime:
       default: "00:59:00"
 
