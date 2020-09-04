@@ -38,8 +38,13 @@ hpc_interface_credentials:
   user: <user name>
   password: <password>
 
-partition_name: interactive
+# partition_name: interactive
+partition_name: "standard"
 jobmanager_list: "SLURM"
+jobmanager_type: "SLURM"
+nnodes: "1"
+ncorespernode: "28"
+jobwalltime: "03:00:00"
 
 #-----------------------------------------------------
 #                     CKAN inputs
@@ -59,7 +64,4 @@ transition_mode: "0"
 quick_test_flag: "TRUE"
 output_dir: "."
 ensemble_number: "1"
-jobmanager_type: "SLURM"
-nnodes: "1"
-ncorespernode: "28"
 inputconfigtags: "FACS,locations,inputs"

@@ -61,7 +61,7 @@ node_templates:
                 nodes: { get_input: nnodes }
                 tasks_per_node: { get_input: ncorespernode }
                 partition: { get_input: partition_name }
-                max_time: "00:59:00"
+                max_time: { get_input: jobwalltime }
             deployment:
                 bootstrap: 'pre_configuring.sh'
                 inputs:
