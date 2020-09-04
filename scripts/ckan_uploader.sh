@@ -17,7 +17,7 @@ if [ -z $CKANAPIKEY ]; then
 
 else
     # Uploading to CKAN to Dataset $ID 
-    ckanapi action resource_create package_id='FACS-outputs' description="output results for $LOCATION_NAME location [ run id : $ID ][executed by $(whoami)]" name=$RESULT_FILE_NAME -r $CKANREPO -a $CKANAPIKEY upload@./$RESULT_FILE_NAME'.zip'
+    ckanapi action resource_create package_id='facs-outputs' description="output results for $LOCATION_NAME location [ run id : $ID ][executed by $(whoami)]" name=$RESULT_FILE_NAME -r $CKANREPO -a $CKANAPIKEY upload@./$RESULT_FILE_NAME'.zip'
 fi
 
 
