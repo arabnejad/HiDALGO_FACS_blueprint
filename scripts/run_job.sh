@@ -6,6 +6,7 @@
 CFGFILE="facs.cfg"
 source $CFGFILE
 
+
 #----------------------------------------
 #     Cloning FACS application
 #----------------------------------------
@@ -26,7 +27,6 @@ bash scripts/install_packages.sh
 bash scripts/ckan_downloader.sh
 
 
-
 #----------------------------------------
 #     Add FACS to PYTHONPATH
 #----------------------------------------
@@ -43,18 +43,40 @@ source $CFGFILE
 LOG_RUN_JOB='run_job.log'
 echo "PYTHONPATH = " $PYTHONPATH > $LOG_RUN_JOB
 
-cd $LOCATION_NAME
-
-# run a single run
-echo "ENSEMBLE_MODE is disabled . . ." | tee -a "$LOG_RUN_JOB"
-start_time="$(date -u +%s.%N)"
-python3 $FACS_LOCATION/run.py --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR
-end_time="$(date -u +%s.%N)"
-elapsed="$(bc <<<"$end_time-$start_time")"
-echo "Total Executing Time = $elapsed seconds" | tee -a "$LOG_RUN_JOB"
 
 
-cd ..
+if [[ "${QUICK_TEST_FLAG^^}" == "TRUE" ]]; then
+	RUN_PY_FILE=$FACS_LOCATION"/run.py -q"
+else
+	RUN_PY_FILE=$FACS_LOCATION"/run.py"
+fi
+
+
+if [ $ENSEMBLE_NUMBER -gt 1 ]; then
+	# run a ensemble jobs
+	echo "ENSEMBLE_MODE is enabled . . ." | tee -a "$LOG_RUN_JOB"
+
+    for i in $(seq 1 $(($ENSEMBLE_NUMBER)))
+    do
+    	cd RUNS/$LOCATION_NAME"_"$i
+
+    	mpirun -n 1 python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
+
+    	cd ../..
+    done
+
+else
+	# run a single run
+	echo "ENSEMBLE_MODE is disabled . . ." | tee -a "$LOG_RUN_JOB"
+
+	cd RUNS/$LOCATION_NAME
+
+	mpirun -n 1 python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
+
+	cd ../..
+fi
+
+wait
 
 
 #----------------------------------------
@@ -72,7 +94,7 @@ source facs.cfg
 env > env.log
 /usr/bin/env > env2.log
 
-zip -r $result_file_name *.err *.out *.script *.yaml $LOCATION_NAME
+zip -r $result_file_name *.err *.out *.script *.yaml RUNS/
 
 
 

@@ -12,19 +12,19 @@ source $CFGFILE
 #----------------------------------------
 if [ -z $CKANREPO ]
 then
-	echo "no CKANREPO specified !!!"
-	exit 1
+    echo "no CKANREPO specified !!!"
+    exit 1
 else
-	echo USING $CKANREPO
+    echo USING $CKANREPO
 fi
 
 #----------------------------------------
-#     create inputs folder (covid_data)
+#     create inputs folder
 #----------------------------------------
-if [ -d covid_data ]; then
-  rm -rf covid_data
+if [ -d inputs ]; then
+  rm -rf inputs
 fi
-mkdir -p covid_data
+mkdir -p inputs
 
 #----------------------------------------
 #     downloading input files from CKAN
@@ -59,9 +59,31 @@ if [ -z "$INPUT_FILES" ]; then
     exit 1
 fi
 
+#----------------------------------------
+#   create a RUN folder and 
+#   extract input config file there
+#----------------------------------------
+if [ -d RUNS ]; then
+  rm -rf RUNS
+fi
+mkdir -p RUNS
+
 for FILE in $INPUT_FILES;
 do
     echo $FILE
-    unzip -o $FILE
+    unzip $FILE -d RUNS
+
+    # if ENSEMBLE_NUMBER>1, means we should have ensemble jobs
+    if [ $ENSEMBLE_NUMBER -gt 1 ]; then
+        for i in $(seq 1 $(($ENSEMBLE_NUMBER)))
+        do
+            mkdir RUNS/$LOCATION_NAME"_"$i
+            cp -r RUNS/$LOCATION_NAME/* RUNS/$LOCATION_NAME"_"$i
+        done
+        rm -rf RUNS/$LOCATION_NAME
+    fi
+
 done
+
+
 
