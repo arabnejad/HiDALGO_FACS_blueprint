@@ -73,7 +73,7 @@ else
 	WORK_PATH=$PWD"/RUNS/"$LOCATION_NAME
 	cd $WORK_PATH
 
-	mpirun -n 1 python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
+	python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
 
 	cd ../..
 fi
