@@ -58,22 +58,17 @@ if [ $ENSEMBLE_NUMBER -gt 1 ]; then
 
     for i in $(seq 1 $(($ENSEMBLE_NUMBER)))
     do
-    	cd RUNS/$LOCATION_NAME"_"$i
 
-    	mpirun -n 1 python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
+    	mpirun -n 1 python3 $RUN_PY_FILE --work_dir=$PWD/RUNS/$LOCATION_NAME"_"$i --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
 
-    	cd ../..
     done
 
 else
 	# run a single run
 	echo "ENSEMBLE_MODE is disabled . . ." | tee -a "$LOG_RUN_JOB"
 
-	cd RUNS/$LOCATION_NAME
+	mpirun -n 1 python3 $RUN_PY_FILE --work_dir=$PWD/RUNS/$LOCATION_NAME --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
 
-	mpirun -n 1 python3 $RUN_PY_FILE --location=$LOCATION_NAME --ci_multiplier=$CI_MULTIPLIER --transition_scenario=$TRANSITION_SCENARIO --transition_mode=$TRANSITION_MODE --output_dir=$OUTPUT_DIR &
-
-	cd ../..
 fi
 
 wait
