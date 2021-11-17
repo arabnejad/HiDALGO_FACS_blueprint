@@ -39,17 +39,17 @@ hpc_interface_credentials:
   password: <password>
 
 # partition_name: interactive
-partition_name: "standard"
+partition_name: "altair"
 jobmanager_list: "SLURM"
 jobmanager_type: "SLURM"
 nnodes: "1"
-ncorespernode: "28"
-jobwalltime: "03:00:00"
+ncorespernode: "48"
+jobwalltime: "00:59:00"
 
 #-----------------------------------------------------
 #                     CKAN inputs
 #-----------------------------------------------------
-ckanrepo: "https://hidalgo1.man.poznan.pl"
+ckanrepo: "https://ckan.hidalgo-project.eu"
 ckanapikey: "<private key>"
 
 #-----------------------------------------------------

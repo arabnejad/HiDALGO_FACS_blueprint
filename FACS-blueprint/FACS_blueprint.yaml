@@ -31,7 +31,7 @@ imports:
     # to speed things up, it is possible to download this file,
     - http://raw.githubusercontent.com/ari-apc-lab/croupier/master/resources/types/cfy_types.yaml
     # HPC pluging
-    - http://raw.githubusercontent.com/ari-apc-lab/croupier/master/plugin.yaml
+    - http://raw.githubusercontent.com/ari-apc-lab/croupier/hidalgo/plugin.yaml
     - https://raw.githubusercontent.com/arabnejad/HiDALGO_FACS_blueprint/master/FACS-blueprint/FACS_blueprint_inputs_definition.yaml
 
 node_templates:
