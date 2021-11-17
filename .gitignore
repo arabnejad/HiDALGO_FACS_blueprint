@@ -2,6 +2,10 @@
 *.tar.gz
 *.zip
 
+# ignore FACS-inputs folders
+**/FACS-inputs/*
+
+
 
 # User-defined blueprint file
 user-blueprint-inputs.yaml
