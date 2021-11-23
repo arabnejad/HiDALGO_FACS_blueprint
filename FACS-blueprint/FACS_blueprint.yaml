@@ -30,21 +30,21 @@ tosca_definitions_version: cloudify_dsl_1_3
 imports:
     # to speed things up, it is possible to download this file,
     - http://raw.githubusercontent.com/ari-apc-lab/croupier/master/resources/types/cfy_types.yaml
-    # HPC pluging
-    - http://raw.githubusercontent.com/ari-apc-lab/croupier/hidalgo/plugin.yaml
-    - https://raw.githubusercontent.com/arabnejad/HiDALGO_FACS_blueprint/master/FACS-blueprint/FACS_blueprint_inputs_definition.yaml
+    # HPC plugin
+    - plugin:croupier
+    - FACS_blueprint_inputs_definition.yaml
 
 node_templates:
     hpc_interface:
         type: croupier.nodes.InfrastructureInterface
         properties:
             config: { get_input: hpc_interface_config }
-            credentials: { get_input: hpc_interface_credentials }
-            external_monitor_entrypoint: { get_input: monitor_entrypoint }
+            ssh_config: { get_input: hpc_interface_credentials }
             job_prefix: { get_input: job_prefix }
             base_dir: { get_input: "hpc_base_dir" }
             # seconds
-            monitor_period: 15
+            monitoring_options:
+                monitor_period: 15
             skip_cleanup: true
             workdir_prefix: { get_input: workdir_prefix }
 
@@ -74,7 +74,7 @@ node_templates:
                     - { get_input: quick_test_flag }
                     - { get_input: output_dir }
                     - { get_input: ensemble_number }
-                    - { get_input: jobmanager_type }
+                    - { get_input: [ hpc_interface_config, infrastructure_interface ] }
                     - { get_input: nnodes }
                     - { get_input: ncorespernode }
                     - { get_input: ckanrepo }
@@ -84,7 +84,7 @@ node_templates:
                 #revert: 'scripts/ckan_uploader.sh'
             skip_cleanup: True
         relationships:
-            - type: job_managed_by_interface
+            - type: task_managed_by_interface
               target: hpc_interface
               
 outputs:
