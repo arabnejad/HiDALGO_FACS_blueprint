@@ -8,163 +8,102 @@ inputs:
 
     hpc_interface_config:
       description: timezone and HPC interface
+      type: croupier.datatypes.wm_config
       default:
-        country_tz: Europe/Madrid
+        country_tz: UTC
         infrastructure_interface: SLURM
+
     hpc_interface_credentials:
       description: HPC credentials
-      default: {}
+      required: True
+      type: croupier.datatypes.ssh_config
+
     partition_name:
       default: interactive
+      type: string
       
     jobwalltime:
       default: "00:59:00"
+      type: string
 
     job_prefix:
       default: FACS_
+      type: string
 
     workdir_prefix:
       default: FACS_cfy
-
-    monitor_entrypoint:
-      default: ""
+      type: string
 
   #-----------------------------------------------------
   #             FACS SIMULATION PARAMETERS
   #-----------------------------------------------------  
   
     facs_github_repo:
-      default:
-        INPUT:
-            name: FACS URL
-            description: "FACS github repo URL"
-            default: "https://github.com/djgroen/facs.git"
-            type: string
-            order: 1
-
+      default: "https://github.com/djgroen/facs.git"
+      description: "FACS github repo URL"
+      type: string
+      
     branch:
-      default:
-        INPUT:
-            name: GitHub Branch Name
-            description: "GitHub Branch Name"
-            default: "master"
-            type: string
-            order: 2
-
+      default: master
+      description: "GitHub Branch Name"
+      type: string
+      
     location_name:
-      default:
-        INPUT:
-            name: Config location name
-            description: "Config location name to be used for simulation"
-            default: "brent"
-            type: string
-            order: 3
-
+      default: brent
+      description: "Config location name to be used for simulation"
+      type: string
+      
     ci_multiplier:
-      default:
-        INPUT:
-            name: ci_multiplier
-            description: "ci_multiplier"
-            default: "0.475"
-            type: string
-            order: 4
-
+      default: "0.475"
+      description: "ci_multiplier"
+      type: string
+      
     transition_scenario:
-      default:
-        INPUT:
-            name: transition_scenario
-            description: "transition scenario"
-            default: "Extend-lockdown"
-            type: string
-            order: 5
-
+      default: "Extend-lockdown"
+      description: "transition scenario"
+      type: string
+      
     transition_mode:
-      default:
-        INPUT:
-            name: transition_mode
-            description: "transition mode"
-            default: "0"
-            type: string
-            order: 6
+      default: "0"
+      description: "transition mode"
+      type: string
 
     quick_test_flag:
-      default:
-        INPUT:
-            name: quick_test_flag
-            description: "quick test flag"
-            default: "TRUE"
-            type: string
-            order: 7
-
+      default: "TRUE"
+      description: "quick test flag"
+      type: string
+      
     output_dir:
-      default:
-        INPUT:
-            name: output_dir
-            description: "output dir"
-            default: "."
-            type: string
-            order: 8
-
+      default: "."
+      description: "output dir"
+      type: string
+      
     ensemble_number:
-      default:
-        INPUT:
-            name: ensemble_number 
-            description: "number of ensemble runs"
-            default: "1"
-            type: string
-            order: 9
-            
-    jobmanager_type:
-      default:
-        INPUT:
-            name: jobmanager
-            description: "jobmanager"
-            default: "SLURM"
-            type: string
-            order: 10
-
+      default: "1"
+      description: "number of ensemble runs"
+      type: string
+                  
     nnodes:
-      default:
-        INPUT:
-            name: Number of Nodes
-            description: "Number of Nodes"
-            default: "1"
-            type: tstring
-            order: 11
-            
+      default: "1"
+      description: "Number of Nodes"
+      type: string
+                  
     ncorespernode:
-      default:
-        INPUT:
-            name: Number of cores/node
-            description: "Number of cores/node"
-            default: "28"
-            type: string
-            order: 12
-
+      default: "28"
+      description: "Number of cores/node"
+      type: string
+      
     ckanrepo:
-      default:
-        INPUT:
-            name: CKAN data repository
-            description: "CKAN data repository"
-            default: "https://hidalgo1.man.poznan.pl"
-            type: string
-            order: 13
-
-
+      default: "https://hidalgo1.man.poznan.pl"
+      description: "CKAN data repository"
+      type: string
+        
     ckanapikey:
-      default:
-        INPUT:
-            name: CKAN API Key
-            description: "CKAN API Key"
-            default: ""
-            type: string
-            order: 14
-
+      required: True
+      description: "CKAN API Key"
+      type: string
+      
     inputconfigtags:
-      default:
-        INPUT:
-            name: Tags name for input config file
-            description: "Tags name for input config file"
-            default: "FACS,locations,inputs"
-            type: string
-            order: 15
+      default: "FACS,locations,inputs"
+      description: "Tags name for input config file"
+      type: string
